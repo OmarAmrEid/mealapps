@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/data/database_helper/database_helper.dart';
 import 'package:meals/model/meal_model.dart';
+import 'package:meals/screen/meal_details.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Your Recipes'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/imgs/png/background_home.png'),
+                  image: AssetImage('assets/imgs/jpg/food.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -93,56 +99,67 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: meals.length,
                       itemBuilder: (context, index) {
                         final meal = meals[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 5,
+                        return GestureDetector(
+                          onTap: () {
+                            // Navigate to meal details screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MealDetailScreen(meal: meal),
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                                  child: Image.network(
-                                    meal.image,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                                    child: Image.network(
+                                      meal.image,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      meal.name,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        meal.name,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star, color: Colors.amber),
-                                        Text('${meal.rating}'),
-                                        SizedBox(width: 16),
-                                        Icon(Icons.access_time, color: Colors.orange),
-                                        Text('${meal.time}'),
-                                      ],
-                                    ),
-                                  ],
+                                      SizedBox(height: 8),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star, color: Colors.amber),
+                                          Text('${meal.rating}'),
+                                          SizedBox(width: 16),
+                                          Icon(Icons.access_time, color: Colors.orange),
+                                          Text('${meal.time}'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },

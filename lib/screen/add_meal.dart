@@ -131,7 +131,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       ),
                       maxLines: 3,
                     ),
-                    SizedBox(height: 380), // Space for the save button
+                    SizedBox(height: 380),
                   ],
                 ),
               ),
